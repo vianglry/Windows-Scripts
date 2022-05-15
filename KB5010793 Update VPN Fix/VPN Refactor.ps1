@@ -11,7 +11,6 @@ $Win10_19044_21H2x64_location = $UpdateFile + "windows10.0-kb5010793-x64_3bae2e8
 $Win11_22000x64_location = $UpdateFile + "windows10.0-kb5010795-x64_7fd6ce84756ac03585cc012568979eb08cc6d583.msu"
 
 
-
 function Get-WindowsBuildNumber {
   
     Get-CimInstance Win32_OperatingSystem | Select-Object -Property buildnumber
@@ -60,7 +59,6 @@ function Download-VPNFix {
     Start-Sleep 5
 }
 
-
 function Install-VPNFix {
     param (
         [string]$VPNFixFileLocation
@@ -71,6 +69,8 @@ function Install-VPNFix {
     wusa.exe $VPNFixFileLocation /q /warnrestart
     
 }
+
+
 
 Download-VPNFix
 
