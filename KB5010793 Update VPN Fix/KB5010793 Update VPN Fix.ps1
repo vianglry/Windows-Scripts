@@ -1,14 +1,28 @@
-$Win10_19042_20H2x64_Address = "http://download.windowsupdate.com/d/msdownload/update/software/updt/2022/01/windows10.0-kb5010793-x64_3bae2e811e2712bd1678a1b8d448b71a8e8c6292.msu"
-$Win10_19043_21H1x64_Address = "http://download.windowsupdate.com/d/msdownload/update/software/updt/2022/01/windows10.0-kb5010793-x64_3bae2e811e2712bd1678a1b8d448b71a8e8c6292.msu"
-$Win10_19044_21H2x64_Address = "http://download.windowsupdate.com/d/msdownload/update/software/updt/2022/01/windows10.0-kb5010793-x64_3bae2e811e2712bd1678a1b8d448b71a8e8c6292.msu"
-$Win11_22000x64_Address = "http://download.windowsupdate.com/d/msdownload/update/software/updt/2022/01/windows10.0-kb5010795-x64_7fd6ce84756ac03585cc012568979eb08cc6d583.msu"
+$win10Address = "http://download.windowsupdate.com/d/msdownload/update/software/updt/2022/01/windows10.0-kb5010793-x64_3bae2e811e2712bd1678a1b8d448b71a8e8c6292.msu"
+$win10Location = "windows10.0-kb5010795-x64_7fd6ce84756ac03585cc012568979eb08cc6d583.msu"
+$updateFile = "C:\VPNFix"
 
-$UpdateFile = "C:\VPNFix\"
+$addressToLocationMap = @{
+    19042 = @{address=$win10Address; location=(Join-Path -Path $updateFile -ChildPath $win10Location)} # this hash table could be its own variable to avoid duplicating it for the next 2 build numbers.
+    19043 = @{address=$win10Address; location=(Join-Path -Path $updateFile -ChildPath $win10Location)}
+    19044 = @{address=$win10Address; location=(Join-Path -Path $updateFile -ChildPath $win10Location)}
+    22000 = @{
+      address = "http://download.windowsupdate.com/d/msdownload/update/software/updt/2022/01/windows10.0-kb5010795-x64_7fd6ce84756ac03585cc012568979eb08cc6d583.msu"
+      location = Join-Path -Path $updateFile -ChildPath "windows10.0-kb5010795-x64_7fd6ce84756ac03585cc012568979eb08cc6d583.msu"
+    }
+}
 
-$Win10_19042_20H2x64_location = $UpdateFile + "windows10.0-kb5010793-x64_3bae2e811e2712bd1678a1b8d448b71a8e8c6292.msu"
-$Win10_19043_21H1x64_location = $UpdateFile + "windows10.0-kb5010793-x64_3bae2e811e2712bd1678a1b8d448b71a8e8c6292.msu"
-$Win10_19044_21H2x64_location = $UpdateFile + "windows10.0-kb5010793-x64_3bae2e811e2712bd1678a1b8d448b71a8e8c6292.msu"
-$Win11_22000x64_location = $UpdateFile + "windows10.0-kb5010795-x64_7fd6ce84756ac03585cc012568979eb08cc6d583.msu"
+function Get-VPNFix {
+    $winBuildNumber = (Get-WindowsBuildNumber).buildnumber
+    if ($addressToLocationMap.HasKey($winBuildNumber)) {
+        $VPNFix = $addressToLocationMap[$winBuildNumber]
+        DownLoad-File -URL $VPNFix.address -Location $VPNFix.location
+    } else {
+        Write-Host "This build does not have a VPN fix."
+        return
+    }
+    Start-Sleep 5
+}
 
 
 function Get-WindowsBuildNumber {
@@ -31,40 +45,6 @@ function Download-File {
     Start-Sleep 5
 }
 
-function Download-VPNFix {
-
-    $winbuild = Get-WindowsBuildNumber
-    
-    if ($winbuild.buildnumber -eq 19042){
-        
-        Download-File -URL $Win10_19042_20H2x64_Address  -Location $Win10_19042_20H2x64_location
-        
-    }
-    elseif ($winbuild.buildnumber -eq 19043){
-        
-        Download-File -URL $Win10_19043_21H1x64_Address -Location $Win10_19043_21H1x64_location
-
-    }
-    elseif ($winbuild.buildnumber -eq 19044){
-        
-        Download-File -URL $Win10_19044_21H2x64_Address -Location $Win10_19044_21H2x64_location
-        
-    }
-    elseif ($winbuild.buildnumber -eq 22000){
-        
-        Download-File -URL $Win11_22000x64_Address -Location $Win11_22000x64_location
-        
-    }
-    else {
-        
-        Write-host "This build does not have a VPN fix."
-        Return
-                
-    }
-
-    Start-Sleep 5
-}
-
 function Install-VPNFix {
     param (
         [string]$VPNFixFileLocation
@@ -75,7 +55,6 @@ function Install-VPNFix {
     wusa.exe $VPNFixFileLocation /q /warnrestart
     
 }
-
 
 
 Download-VPNFix
