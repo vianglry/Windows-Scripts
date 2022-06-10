@@ -14,7 +14,7 @@ $Win11_22000x64_location = $UpdateFile + "windows10.0-kb5010795-x64_7fd6ce84756a
 function Get-WindowsBuildNumber {
   
     Get-CimInstance Win32_OperatingSystem | Select-Object -Property buildnumber
-    
+    Write-host "Windows Build "$winbuild.buildnumber" found. Starting Download."
 }
 
 function Download-File {
@@ -22,9 +22,7 @@ function Download-File {
         [string]$URL,
         [String]$Location
     )
-
-    $Winbuild = Get-WindowsBuildNumber
-    Write-host "Windows Build "$winbuild.buildnumber" found. Starting Download."
+    
     Start-Sleep 5
     Invoke-WebRequest -Uri $URL -OutFile $Location -v
     Write-host "Download Complete"
@@ -32,34 +30,30 @@ function Download-File {
 }
 
 function Download-VPNFix {
+    param (
+        [string]$winbuild
+    )
 
-    $winbuild = Get-WindowsBuildNumber
-    
     if ($winbuild.buildnumber -eq 19042){
         
         Download-File -URL $Win10_19042_20H2x64_Address  -Location $Win10_19042_20H2x64_location
-        
     }
     elseif ($winbuild.buildnumber -eq 19043){
         
         Download-File -URL $Win10_19043_21H1x64_Address -Location $Win10_19043_21H1x64_location
-
     }
     elseif ($winbuild.buildnumber -eq 19044){
         
         Download-File -URL $Win10_19044_21H2x64_Address -Location $Win10_19044_21H2x64_location
-        
     }
     elseif ($winbuild.buildnumber -eq 22000){
         
         Download-File -URL $Win11_22000x64_Address -Location $Win11_22000x64_location
-        
     }
     else {
         
         Write-host "This build does not have a VPN fix."
         Return
-                
     }
 
     Start-Sleep 5
@@ -77,9 +71,14 @@ function Install-VPNFix {
 }
 
 
+If ($MyInvocation.InvocationName -ne ".")
+{
+    $Winbuild = Get-WindowsBuildNumber
 
-Download-VPNFix
+    Download-VPNFix $Winbuild
 
-$VPNFile = Get-ChildItem $UpdateFile
+    $VPNFile = Get-ChildItem $UpdateFile
 
-Install-VPNFix -VPNFixFileLocation $VPNFile.FullName
+    Install-VPNFix -VPNFixFileLocation $VPNFile.FullName
+}
+
