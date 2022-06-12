@@ -18,6 +18,16 @@ function Get-WindowsBuildNumber {
     Start-Sleep 2
 }
 
+function Test-VPNFixExistence {
+    param (
+        $winBuildNumber
+    )
+
+    $WinbuildKeyExists = $MicrosoftVPNFix_WebaddressToLocalDestinationMap.Keys -contains ($winBuildNumber)
+    
+    $WinbuildKeyExists  
+} 
+
 function Install-VPNFix {
     param (
         [string]$VPNFixFile
@@ -32,19 +42,17 @@ If ($MyInvocation.InvocationName -ne ".") {
 
     $winBuildNumber = Get-WindowsBuildNumber 
 
-    if ($MicrosoftVPNFix_WebaddressToLocalDestinationMap.Keys -ccontains ($winBuildNumber)) {
-
-        $VPNFixFileDetails = $MicrosoftVPNFix_WebaddressToLocalDestinationMap[$winBuildNumber]
-        New-Item -Type Directory -Path $updateFilePath
-        Invoke-WebRequest -Uri $VPNFixFileDetails.Webaddress -OutFile $VPNFixFileDetails.Destination
-        Install-VPNFix -VPNFixFile  $VPNFixFileDetails.Destination
-        Remove-item $updateFilePath -Confirm:$false
-    } 
-    else {
-
-        Write-Host "This build does not have a VPN fix."
-        return
+    $VPNFixExists = Test-VPNFixExistence $winBuildNumber
+    if($VPNFixExists -eq $false) {
+        Write-Host "No VPN fix exists for this build of Windows. Exiting the script."
+        Exit
     }
+    Write-Host "A VPN fix exists for this build of Windows. Starting download and installation."
+    Start-Sleep 1
 
-    
+    $VPNFixFileDetails = $MicrosoftVPNFix_WebaddressToLocalDestinationMap[$winBuildNumber]
+    New-Item -Type Directory -Path $updateFilePath
+    Invoke-WebRequest -Uri $VPNFixFileDetails.Webaddress -OutFile $VPNFixFileDetails.Destination
+    Install-VPNFix -VPNFixFile  $VPNFixFileDetails.Destination
+    Remove-item $updateFilePath -Confirm:$false
 }
