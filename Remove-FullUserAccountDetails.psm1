@@ -15,7 +15,6 @@ function Get-LocalUserRegistryKey {
     )
     
     $ProfileListRegKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*"
-
     Get-Itemproperty $ProfileListRegKey -name ProfileImagePath | `
         Where-Object -property ProfileImagePath -Like ("*" + $UserAccounttobeRemoved)
 } 
@@ -36,9 +35,7 @@ function Remove-FullUserAccountDetails {
     $LocalUserFiletobeRemoved = $UserAccounttobeRemoved.ProfileImagePath
 
     Remove-LocalUser $LocalUserFiletobeRemoved
-    
     Remove-Item $UserAccounttobeRemoved.PSPath
-    
     Remove-Item $LocalUserRegistryKeytobeRemoved
     }
 
