@@ -25,17 +25,14 @@ function Remove-FullUserAccountDetails {
     param (
         [string]
         $UserAccount
-        
     )
-
     New-ProfileListRegKeyBackup 
 
-    $UserAccounttobeRemoved = Get-LocalUserRegistryKey $UserAccount
-    $LocalUserRegistryKeytobeRemoved = $UserAccounttobeRemoved.pspath 
-    $LocalUserFiletobeRemoved = $UserAccounttobeRemoved.ProfileImagePath
+    $FUllUserRegistryKey = Get-LocalUserRegistryKey $UserAccount
+    $LocalUserRegistryKeytobeRemoved = $FullUserRegistryKey.pspath 
+    $LocalUserFiletobeRemoved = $FullUserRegistryKey.ProfileImagePath
 
-    Remove-LocalUser $LocalUserFiletobeRemoved
-    Remove-Item $UserAccounttobeRemoved.PSPath
+    Remove-LocalUser $UserAccount
+    Remove-Item $LocalUserFiletobeRemoved -Force -Recurse
     Remove-Item $LocalUserRegistryKeytobeRemoved
     }
-
