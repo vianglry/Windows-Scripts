@@ -1,0 +1,8 @@
+Name: Test-Windows-Scripts
+run-name: ${{ github.actor }} is pushing a change to the code
+on: push
+jobs:
+  build-windows-pc:
+    runs-on: windows-latest
+    steps:
+      - run: 
