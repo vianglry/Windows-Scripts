@@ -4,7 +4,7 @@ run-name: ${{ github.actor }} is pushing a change to the code
 on: 
   push:
     branches: 
-      - main
+      - Test
 jobs:
   build-windows-pc:
     runs-on: windows-latest
