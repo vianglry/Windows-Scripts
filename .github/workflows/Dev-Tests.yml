@@ -1,0 +1,17 @@
+name: Dev-Testing
+
+run-name: ${{ github.actor }} is pushing a change to the code
+on:
+  push:
+    branches:
+      - Dev
+jobs:
+  test-remove-user-script:
+    runs-on: windows-latest
+    environment: Dev
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up pester testing suite
+      run: Install-Module -Name Pester -Force -SkipPublisherCheck
+    - name: Run remove user tests
+      run: Invoke-Pester -Path .\Windows-Scripts\Remove-User-Account\Remove-FullUserAccountDetails.tests.ps1
