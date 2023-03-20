@@ -14,4 +14,4 @@ jobs:
     - name: Set up pester testing suite
       run: Install-Module -Name Pester -Force -SkipPublisherCheck
     - name: Run remove user tests
-      run: Invoke-Pester -Path .\Windows-Scripts\Remove-User-Account\Remove-FullUserAccountDetails.tests.ps1
+      run: Invoke-Pester -Path .\Remove-FullUserAccountDetails.tests.ps1
