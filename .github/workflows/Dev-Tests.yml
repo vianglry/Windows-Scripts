@@ -11,7 +11,7 @@ jobs:
     environment: Dev
     steps:
     - uses: actions/checkout@v3
+    - run: get-localuser -passthru
     - name: Run remove user tests
       shell: pwsh
       run: Invoke-Pester -Path .\Remove-FullUserAccountDetails.tests.ps1 -passthru
-      run: get-localuser -passthru
