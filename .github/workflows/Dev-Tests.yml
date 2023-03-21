@@ -17,6 +17,7 @@ jobs:
          New-LocalUser -Name $Username -Password $Password
          get-localuser
          $User = get-localuser $Username
+         $User.FullName
          $User.FullName.equals($Username)
     - name: Run remove user tests
       shell: pwsh
