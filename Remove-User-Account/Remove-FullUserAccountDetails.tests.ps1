@@ -1,13 +1,10 @@
 BeforeAll {
     $srcfile = get-childitem  *Remove-FullUserAccountDetails.ps1 -Recurse 
     . $srcfile.FullName 
-
-    $Password = Convertto-SecureString "password123!ABC" -asplaintext -force
-    $Username = "Test_User"
-    New-LocalUser -Name $Username -Password $Password
 }
 Describe "Test for the existence the Test_User" {
     It "should return true" {
+        $Username = "Test_User"
         Test-path c:\users\$Username | Should -Be $true
     }
 }
