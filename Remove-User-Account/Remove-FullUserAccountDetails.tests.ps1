@@ -6,7 +6,7 @@ Describe "Test for the existence the Test_User" {
     It "should return true" {
         $Username = "Test_User"
         $User = get-localuser $Username 
-        $User.FullName.equals($Username) | Should -Be $true
+        $User.Name.equals($Username) | Should -Be $true
     }
 }
 Describe "Test for the existence of a registry backup" {
