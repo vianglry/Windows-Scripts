@@ -4,7 +4,7 @@ BeforeAll {
 
     $Password = Convertto-SecureString "password123!ABC" -asplaintext -force
     $Username = "Test_User"
-    New-LocalUser -Name $Username -Password $Password
+    New-LocalUser -Name $Username -Password $Password -passthru
 }
 Describe "Test for the existence the Test_User" {
     It "should return true" {
