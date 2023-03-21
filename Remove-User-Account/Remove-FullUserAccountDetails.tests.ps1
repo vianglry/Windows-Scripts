@@ -1,6 +1,7 @@
 BeforeAll {
-    . Windows-Scripts\Remove-User-Account\Remove-FullUserAccountDetails.ps1
+    $srcfile = get-childitem  *Remove-FullUserAccountDetails.ps1 -Recurse 
 
+    . $srcfile.DirectoryName
 
     $Password = ConvertFrom-SecureString "password123!ABC" -asplaintext -force
     $Username = "Test_User"
