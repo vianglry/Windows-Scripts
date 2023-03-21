@@ -8,8 +8,7 @@ BeforeAll {
 }
 Describe "Test for the existence the Test_User" {
     It "should return true" {
-        $TestUser = Get-localuser $Username
-        $TestUser.FullName.equals($Username) | Should -Be $true
+        Test-path c:\users\$Username | Should -Be $true
     }
 }
 Describe "Test for the existence of a registry backup" {
