@@ -15,7 +15,7 @@ jobs:
          $Password = Convertto-SecureString "password123!ABC" -asplaintext -force
          $Username = "Test_User"
          New-LocalUser -Name $Username -Password $Password
-         get-localuser $Username
+         get-localuser
     - name: Run remove user tests
       shell: pwsh
       run: Invoke-Pester -Path .\Remove-FullUserAccountDetails.tests.ps1 -passthru
