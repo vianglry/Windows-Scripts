@@ -13,6 +13,9 @@ BeforeAll {
         write-host $UserMissingError
         exit
     }
+    else {
+        write-host Test_User exists
+    }
 
 }
 Describe "Test for the existence of a registry backup" {
