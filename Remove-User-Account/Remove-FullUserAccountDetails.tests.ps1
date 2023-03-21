@@ -1,7 +1,7 @@
 BeforeAll {
     $srcfile = get-childitem  *Remove-FullUserAccountDetails.ps1 -Recurse 
 
-    . $srcfile.DirectoryName
+    . $srcfile.DirectoryName 
 
     $Password = ConvertFrom-SecureString "password123!ABC" -asplaintext -force
     $Username = "Test_User"
