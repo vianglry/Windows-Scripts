@@ -3,7 +3,7 @@ BeforeAll {
 
     . $srcfile.FullName 
 
-    $Password = ConvertFrom-SecureString "password123!ABC" -asplaintext -force
+    $Password = Convertto-SecureString "password123!ABC" -asplaintext -force
     $Username = "Test_User"
     New-LocalUser -Name $Username -Password $Password
     $UserMissingError = "Test_User is missing. Ending test."
