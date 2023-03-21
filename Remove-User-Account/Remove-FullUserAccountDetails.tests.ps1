@@ -19,7 +19,7 @@ Describe "Test for the existence of a registry backup" {
     Context "When the user exists" {
         It "should return true" {
             New-ProfileListRegKeyBackup
-            Test-path $ProfileListBackupFolder | Should -Be $true
+            Test-path "C:\ProfileList.reg" | Should -Be $true
         }
     }
 }
