@@ -5,7 +5,7 @@ BeforeAll {
 Describe "Test for the existence the Test_User" {
     It "should return true" {
         $Username = "Test_User"
-        Test-path c:\users\$Username | Should -Be $true
+        (get-localuser $Username).exists() | Should -Be $true
     }
 }
 Describe "Test for the existence of a registry backup" {
