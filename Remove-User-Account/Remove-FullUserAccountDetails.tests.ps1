@@ -5,10 +5,6 @@ BeforeAll {
     $Password = Convertto-SecureString "password123!ABC" -asplaintext -force
     $Username = "Test_User"
     New-LocalUser -Name $Username -Password $Password
-    $UserMissingError = "Test_User is missing. Ending test."
-
-
-
 }
 Describe "Test for the existence the Test_User" {
     It "should return true" {
