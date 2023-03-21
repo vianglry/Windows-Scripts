@@ -1,5 +1,5 @@
 BeforeAll {
-    . \Remove-FullUserAccountDetails.ps1
+    . Windows-Scripts\Remove-User-Account\Remove-FullUserAccountDetails.ps1
 
 
     $Password = ConvertFrom-SecureString "password123!ABC" -asplaintext -force
