@@ -7,16 +7,14 @@ BeforeAll {
     New-LocalUser -Name $Username -Password $Password
     $UserMissingError = "Test_User is missing. Ending test."
 
-    $TestUser = Get-localuser $Username
 
-    if ($TestUser.equals("Test_User") -eq $false) {
-        write-host $UserMissingError
-        exit
-    }
-    else {
-        write-host Test_User exists
-    }
 
+}
+Describe "Test for the existence the Test_User" {
+    It "should return true" {
+        $TestUser = Get-localuser $Username
+        $TestUser.equals("Test_User") | Should -Be $true
+    }
 }
 Describe "Test for the existence of a registry backup" {
     Context "When the user exists" {
