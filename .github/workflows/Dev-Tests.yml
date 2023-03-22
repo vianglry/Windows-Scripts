@@ -24,6 +24,6 @@ jobs:
          $ProfileListRegKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList"
          $UserRegKeyName = "1235465test" 
          New-Item -Path $ProfileListRegKey -Name ($UserRegKeyName + $UserRegKeyName + "\" + $Username)
-         New-itemproperty -Path ($ProfileListRegKey + $UserRegKeyName + "\" + $Username) -Name ProfileImagePath -Value "C:\Users\$Username"
+         New-itemproperty -Path ($ProfileListRegKey + $UserRegKeyName) -Name ProfileImagePath -Value "C:\Users\$Username"
     - name: Run remove user tests
       run: Invoke-Pester -Path .\Remove-FullUserAccountDetails.tests.ps1 -passthru
