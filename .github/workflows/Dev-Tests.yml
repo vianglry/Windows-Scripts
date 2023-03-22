@@ -20,6 +20,7 @@ jobs:
          New-LocalUser -Name $Username -Password $Password
     - name: GHA Tests
       run: |
+         $Username = "Test_User"
          $ProfileListRegKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*"
          Get-Itemproperty $ProfileListRegKey -name ProfileImagePath | `
           Where-Object -property ProfileImagePath -Like ("*" + $Username)
