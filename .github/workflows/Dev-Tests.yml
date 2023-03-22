@@ -20,6 +20,6 @@ jobs:
          New-LocalUser -Name $Username -Password $Password
          $ProfileListRegKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*"
          Get-Itemproperty $ProfileListRegKey -name ProfileImagePath | `
-          Where-Object -property ProfileImagePath -Like ("*" + $Username)
+          Where-Object -property ProfileImagePath -Like ("*" + $Username) -passthru
     - name: Run remove user tests
       run: Invoke-Pester -Path .\Remove-FullUserAccountDetails.tests.ps1 -passthru
