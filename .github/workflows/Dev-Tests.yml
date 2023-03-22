@@ -21,7 +21,7 @@ jobs:
     - name: GHA Tests
       run: |
          $Username = "Test_User"
-         $ProfileListRegKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\"
+         $ProfileListRegKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList"
          $UserRegKeyName = "1235465test" 
          New-Item -Path $ProfileListRegKey -Name ($UserRegKeyName + $UserRegKeyName + "\" + $Username)
          New-itemproperty -Path ($ProfileListRegKey + $UserRegKeyName + "\" + $Username) -Name ProfileImagePath -Value "C:\Users\$Username"
