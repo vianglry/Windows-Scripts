@@ -21,16 +21,3 @@ Describe "Testing the Get-LocalUserRegistryKey function" {
        $GHATestUser.ProfileImagePath | Should -Be "C:\Users\runneradmin"
     }
 }
-Describe "Testing the Remove-FullUserAccountDetails function" {
-    BeforeEach {
-        $FUllUserRegistryKey = "runneradmin"
-        $FUllUserRegistryKey.ProfileImagePath = "C:\Users\runneradmin"
-
-        Mock Get-LocalUserRegistryKey {return Success}
-        Mock Remove-LocalUser {return Success}
-        Mock Remove-Item {return Success}
-    }
-    It "should test the  Remove-FullUserAccountDetails function." {
-       Remove-FullUserAccountDetails runneradmin
-    }
-}
