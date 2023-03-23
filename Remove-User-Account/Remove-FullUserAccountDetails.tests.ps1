@@ -30,7 +30,7 @@ Describe "Testing the Remove-FullUserAccountDetails function" {
         Mock Remove-LocalUser {return Success}
         Mock Remove-Item {return Success}
     }
-    It "should be able to find a the registry key for a user." {
+    It "should test the  Remove-FullUserAccountDetails function." {
        Remove-FullUserAccountDetails runneradmin
     }
 }
