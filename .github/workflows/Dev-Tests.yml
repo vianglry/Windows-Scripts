@@ -1,9 +1,11 @@
-name: Dev-Testing
+name: Windows-Scripts Testing
 
 run-name: ${{ github.actor }} is pushing a change to the code
 on:
   push:
+  pull_request:
     branches:
+      - main
       - Dev
 jobs:
   test-remove-user-script:
@@ -18,5 +20,7 @@ jobs:
          $Password = Convertto-SecureString "password123!ABC" -asplaintext -force
          $Username = "Test_User"
          New-LocalUser -Name $Username -Password $Password
-    - name: Run remove user tests
+    - name: Run Remove-FullUserAccountDetails Unit tests
       run: Invoke-Pester -Path .\Remove-FullUserAccountDetails.tests.ps1 -passthru
+    # - name: Run Remove-FullUserAccountDetails Integration tests
+    #   run: Invoke-Pester -Path .\Remove-FullUserAccountDetails-Integration.tests.ps1
