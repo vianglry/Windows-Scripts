@@ -29,7 +29,7 @@ function Remove-FullUserAccountDetails {
     New-ProfileListRegKeyBackup 
 
     $FUllUserRegistryKey = Get-LocalUserRegistryKey $UserAccount
-    $LocalUserRegistryKeytobeRemoved = $FullUserRegistryKey.pspath 
+    $LocalUserRegistryKeytobeRemoved = $FUllUserRegistryKey 
     $LocalUserFiletobeRemoved = $FullUserRegistryKey.ProfileImagePath
 
     Remove-LocalUser $UserAccount
