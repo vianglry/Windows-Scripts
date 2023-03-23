@@ -9,11 +9,15 @@ Describe "Test for the existence the Test_User" {
         $User.Name.equals($Username) | Should -Be $true
     }
 }
-Describe "Test for the existence of a registry backup" {
-    Context "When the user exists" {
-        It "should return true" {
-            New-ProfileListRegKeyBackup
-            Test-path -path "C:\ProfileList.reg" | Should -Be $true
-        }
+Describe "Testing the New-ProfileListRegKeyBackup function" {
+    It "Should create a backup of th registry and this test should detect it's existence" {
+        New-ProfileListRegKeyBackup
+        Test-path -path "C:\ProfileList.reg" | Should -Be $true
+    }
+}
+Describe "Testing the Get-LocalUserRegistryKey function" {
+    It "should be able to find a the registry key for a user." {
+       $GHATestUser = Get-LocalUserRegistryKey runneradmin 
+       $GHATestUser.ProfileImagePath | Should -Be "C:\Users\runneradmin"
     }
 }

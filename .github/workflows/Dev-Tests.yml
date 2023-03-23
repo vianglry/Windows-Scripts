@@ -18,12 +18,5 @@ jobs:
          $Password = Convertto-SecureString "password123!ABC" -asplaintext -force
          $Username = "Test_User"
          New-LocalUser -Name $Username -Password $Password
-    - name: GHA Tests
-      run: |
-         $Username = "Test_User"
-         $ProfileListRegKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList"
-         $UserRegKeyName = "1235465test" 
-         New-Item -Path $ProfileListRegKey -Name ($UserRegKeyName + $UserRegKeyName + "\" + $Username)
-         New-itemproperty -Path ($ProfileListRegKey + $UserRegKeyName) -Name ProfileImagePath -Value "C:\Users\$Username"
     - name: Run remove user tests
       run: Invoke-Pester -Path .\Remove-FullUserAccountDetails.tests.ps1 -passthru
